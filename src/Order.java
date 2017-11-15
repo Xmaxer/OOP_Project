@@ -11,7 +11,15 @@ public class Order {
 	
 	public String toString()
 	{
-		return ordersDetails.toString();
+		String toReturn = "";
+		
+		if(ordersDetails.size() == 0)
+			return "No products in order.";
+		
+		for(OrderDetails od : ordersDetails)
+			toReturn += od.toString() + "\n";
+		
+		return toReturn;
 	}
 	public void add(Product product, int quantity)
 	{

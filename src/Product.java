@@ -16,7 +16,7 @@ public class Product {
 	}
 	public String toString()
 	{
-		return "[" + productID + "] Product name: " + name + " (" + productID + ")" + "\nDescription: " + description + "\nPrice: " + price + "\n";
+		return "[ID: " + productID + "] Product name: " + name + "\nDescription: " + description + "\nPrice: " + price + "\n";
 	}
 	public void print()
 	{

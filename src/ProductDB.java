@@ -1,39 +1,22 @@
-import java.util.ArrayList;
 
-public class ProductDB {
-
-	private ArrayList<Product> products;
+public class ProductDB extends ObjectDB{
 
 	public ProductDB()
 	{
-		products = new ArrayList<Product>();
-	}
-	public void add(Product product)
-	{
-		products.add(product);
-	}
-	
-	public void remove(Product product)
-	{
-		products.remove(product);
+		super();
 	}
 	
 	public Product find(int productID)
 	{
-		for(Product product : products)
+		for(Object object : super.objects)
 		{
+			Product product = (Product) object;
+			
 			if(product.getProductID() == productID)
 			{
 				return product;
 			}
 		}
 		return null;
-	}
-	
-	/**
-	 * @return the products
-	 */
-	public ArrayList<Product> getProducts() {
-		return products;
 	}
 }

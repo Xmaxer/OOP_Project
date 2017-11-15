@@ -12,15 +12,27 @@ public class Customer {
 		this.address = address;
 		orders = new ArrayList<Order>();
 	}
-
+	public Customer(String name)
+	{
+		this.name = name;
+		this.address = "Unknown";
+		orders = new ArrayList<Order>();
+	}
 	public void addOrder(Order o)
 	{
 		orders.add(o);
 	}
 	
+	public void printAllOrders()
+	{
+		for(Order order : this.orders)
+		{
+			System.out.println(order);
+		}
+	}
 	public String toString()
 	{
-		return name + " lives at " + address + " has " + orders.size() + " orders\n" + orders;
+		return name + " lives at " + address + " has " + orders.size() + " orders";
 	}
 	/**
 	 * @return the name

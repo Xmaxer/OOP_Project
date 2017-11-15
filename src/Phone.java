@@ -6,7 +6,7 @@ public class Phone extends Product{
 	private double storageSpace;
 	
 	public Phone(String make, String model, double price, double storageSpace) {
-		super(make, model, price);
+		super(make + " " + model, storageSpace + "GB of storage", price);
 		
 		this.make = make;
 		this.model = model;
@@ -20,8 +20,13 @@ public class Phone extends Product{
 	}
 
 	@Override
+	public String toString()
+	{
+		return "[ID: " + super.getProductID() + "] Phone make and model: " + make + " " + model + "\nPrice: " + super.getPrice() + "\nStorage: " + storageSpace + "\n";
+	}
+	@Override
 	public void print() {
-		super.print();
+		System.out.println(this);
 	}
 	
 	/**

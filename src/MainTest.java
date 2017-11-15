@@ -1,4 +1,3 @@
-import java.util.ArrayList;
 import java.util.Scanner;
 
 public class MainTest {
@@ -11,8 +10,9 @@ public class MainTest {
 	"Quit"};
 
 	private static Scanner input = new Scanner(System.in);
+	
 	private static ProductDB products = new ProductDB();
-	private static ArrayList<Customer> customers = new ArrayList<Customer>();
+	private static CustomerDB customers = new CustomerDB();
 
 	public static void main(String[] args) {
 
@@ -68,12 +68,13 @@ public class MainTest {
 				break;
 			case 2:
 				input.nextLine();
+				System.out.print("Enter product ID: ");
 				Product product = products.find((input.hasNextInt()) ? input.nextInt() : -1);
 				System.out.println((product == null) ? "Couldn't find product with the specified ID." : product);
 				break;
 			case 3:
 				input.nextLine();
-				displayProducts();
+				System.out.println(products.toString());
 				break;
 			case 4:
 				input.nextLine();
@@ -87,118 +88,116 @@ public class MainTest {
 				System.out.println("Quitting...");
 				return;
 			default:
+				input.nextLine();
 				System.out.println("Input must be between 1 and " + MENU_OPTIONS.length);
 			}
-
-			input.nextLine();
 		}
 
 
 	}
 
 	private static void displayOrders() {
-		
-		String customerName = "";
-		Customer currentCustomer = null;
-		Order orders = new Order();
 
-		while(customerName.isEmpty())
+		String customerName = "";
+		
+		System.out.println("Type -1 to exit.");
+		
+		while(true)
 		{
 			System.out.print("Enter customer name: ");
 			customerName = input.nextLine();
-
-			for(Customer customer : customers)
+			
+			if(customerName.equals("-1"))
+				return;
+			
+			if(!customerName.isEmpty())
 			{
-				if(customer.getName().equalsIgnoreCase(customerName))
+				Customer customer = customers.find(customerName);
+				
+				if(customer != null)
 				{
-					currentCustomer = customer;
-					break;
+					customer.printAllOrders();
+					return;
 				}
 				else
-				{
-					System.out.println("Couldn't find customer: " + customerName);
-					customerName = "";
-				}
+					System.out.println("Couldn't find customer with the name of: " + customerName);
 			}
+			else
+				System.out.println("Customer name cannot be blank.");
 		}
 	}
 
 	private static void order() {
 
+		System.out.println("Type -1 to exit.");
+		
 		String customerName = "";
 		Customer currentCustomer = null;
-		Order orders = new Order();
-
-		while(customerName.isEmpty())
-		{
-			System.out.print("Enter customer name: ");
-			customerName = input.nextLine();
-
-			for(Customer customer : customers)
-			{
-				if(customer.getName().equalsIgnoreCase(customerName))
-				{
-					currentCustomer = customer;
-					break;
-				}
-				else
-				{
-					System.out.println("Couldn't find customer: " + customerName);
-					customerName = "";
-				}
-			}
-		}
-
+		Order order = new Order();
 
 		while(true)
 		{
-			int productID = 0;
-			int quantity = 0;
-
-			System.out.print("Enter product id and quantity. -1 to finish");
+			System.out.print("Enter customer name: ");
+			customerName = input.nextLine();
+			
+			if(customerName.equals("-1"))
+				return;
+			
+			else if(!customerName.isEmpty())
+			{
+				currentCustomer = customers.find(customerName);
+				
+				if(currentCustomer == null)
+				{
+					System.out.println("Creating new customer with the name of: " + customerName);
+					currentCustomer = new Customer(customerName);
+					customers.add(currentCustomer);
+				}
+				break;
+			}
+		}
+		
+		System.out.println("Type -1 to finish adding orders.");
+		
+		while(true)
+		{
+			System.out.print("Enter product id and quantity: ");
 			String[] in = input.nextLine().split(" ");
 
 			try {
 
 				if(in.length == 2)
 				{
-					productID = Integer.valueOf(in[0]);
-					quantity = Integer.valueOf(in[1]);
+					int productID = Integer.valueOf(in[0]);
+					int quantity = Integer.valueOf(in[1]);
 
 					Product product = products.find(productID);
 
 					if(product != null)
 					{
-						orders.add(product, quantity);
+						order.add(product, quantity);
 						System.out.println("You ordered " + quantity + " of " + product.getName());
 					}
 					else
-						System.out.println("Couldn't find product with the specified ID");
-
+						System.out.println("Couldn't find product with the ID of: " + productID);
 				}
-				else if(in.length == 1)
+				else if(in.length == 1 && in[0].equals("-1"))
 				{
-					Integer number = Integer.valueOf(in[0]);
-
-					if(number == -1)
-					{
-						break;
-					}
+					break;
 				}
+				else
+					System.out.println("Invalid input. Try again.");
 			} catch (NumberFormatException e)
 			{ System.out.println("Invalid input."); }
 		}
 
-		if(!orders.getOrdersDetails().isEmpty())
-			currentCustomer.addOrder(orders);
+		if(!order.getOrdersDetails().isEmpty())
+		{
+			currentCustomer.addOrder(order);
+			System.out.println("\nAdded order\n");
+		}
 		else
-			System.out.println("No orders were added for " + customerName);;
-	}
-
-	private static void displayProducts() {
-
-		for(Product product : products.getProducts())
-			System.out.println(product);
+			System.out.println("\nNo orders were added for " + customerName + "\n");;
 	}
 
 	private static void createAPhone() {
@@ -208,16 +207,16 @@ public class MainTest {
 		double price = 0;
 		double storage = 0;
 
-		while(make.isEmpty())
+		System.out.print("Enter phone make: ");
+		while((make = input.nextLine()).isEmpty())
 		{
-			System.out.print("Enter phone make: ");
-			make = input.nextLine();
+			System.out.print("Phone make cannot be empty!\nEnter phone make: ");
 		}
 
-		while(model.isEmpty())
+		System.out.print("Enter phone model: ");
+		while((model = input.nextLine()).isEmpty())
 		{
-			System.out.print("Enter phone model: ");
-			model = input.nextLine();
+			System.out.print("Phone model cannot be empty!\nEnter phone model: ");
 		}
 
 		System.out.print("Enter phone price: ");
@@ -238,7 +237,7 @@ public class MainTest {
 
 		products.add(newPhone);
 
-		System.out.println("Added '" + make + " " + model + "' to list of products.");
+		System.out.println("\nAdded '" + make + " " + model + "' to list of products. Product ID: " + Product.getCurrentID() + "\n");
 
 	}
 }

@@ -12,7 +12,7 @@ public class OrderDetails {
 	
 	public String toString()
 	{
-		return product + "\nQuantity: " + quantity;
+		return quantity + " of " + product;
 	}
 	public void print()
 	{
