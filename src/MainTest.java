@@ -1,3 +1,5 @@
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Scanner;
 
 public class MainTest {
@@ -12,8 +14,8 @@ public class MainTest {
 	private static Scanner input = new Scanner(System.in);
 	
 	private static ProductDB products = new ProductDB();
-	private static CustomerDB customers = new CustomerDB();
-
+	private static List<Customer> customers = new ArrayList<Customer>();
+	
 	public static void main(String[] args) {
 
 		Phone p1 = new Phone("Samsung", "Galaxy S8", 500, 128);
@@ -68,9 +70,11 @@ public class MainTest {
 				break;
 			case 2:
 				input.nextLine();
+				
 				System.out.print("Enter product ID: ");
 				Product product = products.find((input.hasNextInt()) ? input.nextInt() : -1);
-				System.out.println((product == null) ? "Couldn't find product with the specified ID." : product);
+				System.out.println((product == null) ? "Couldn't find product with the specified ID." : "\n" + product);
+				
 				break;
 			case 3:
 				input.nextLine();
@@ -112,7 +116,7 @@ public class MainTest {
 			
 			if(!customerName.isEmpty())
 			{
-				Customer customer = customers.find(customerName);
+				Customer customer = findCustomer(customerName);
 				
 				if(customer != null)
 				{
@@ -120,10 +124,10 @@ public class MainTest {
 					return;
 				}
 				else
-					System.out.println("Couldn't find customer with the name of: " + customerName);
+					System.out.println("\nCouldn't find customer with the name of: " + customerName + "\n");
 			}
 			else
-				System.out.println("Customer name cannot be blank.");
+				System.out.println("\nCustomer name cannot be blank.\n");
 		}
 	}
 
@@ -145,11 +149,11 @@ public class MainTest {
 			
 			else if(!customerName.isEmpty())
 			{
-				currentCustomer = customers.find(customerName);
+				currentCustomer = findCustomer(customerName);
 				
 				if(currentCustomer == null)
 				{
-					System.out.println("Creating new customer with the name of: " + customerName);
+					System.out.println("\nCreating new customer with the name of: " + customerName + "\n");
 					currentCustomer = new Customer(customerName);
 					customers.add(currentCustomer);
 				}
@@ -176,10 +180,10 @@ public class MainTest {
 					if(product != null)
 					{
 						order.add(product, quantity);
-						System.out.println("You ordered " + quantity + " of " + product.getName());
+						System.out.println("\nYou ordered " + quantity + " of " + product.getName() + "\n");
 					}
 					else
-						System.out.println("Couldn't find product with the ID of: " + productID);
+						System.out.println("\nCouldn't find product with the ID of: " + productID + "\n");
 				}
 				else if(in.length == 1 && in[0].equals("-1"))
 				{
@@ -239,5 +243,17 @@ public class MainTest {
 
 		System.out.println("\nAdded '" + make + " " + model + "' to list of products. Product ID: " + Product.getCurrentID() + "\n");
 
+	}
+	
+	private static Customer findCustomer(String name)
+	{
+		for(Customer customer : customers)
+		{	
+			if(customer.getName().equals(name))
+			{
+				return customer;
+			}
+		}
+		return null;
 	}
 }
