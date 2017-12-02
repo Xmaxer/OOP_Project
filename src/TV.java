@@ -8,7 +8,7 @@ public class TV extends Product{
 	
 	public TV(String make, double screenSize, String type, boolean threeD, double price) {
 		
-		super(make + " " + type + " TV", screenSize + " inch screen size", price);
+		super(make + " " + type + " TV", screenSize + " inch screen size, 3D " + ((threeD) ? "capable" : "incapable") + " TV", price);
 		
 		this.make = make;
 		this.screenSize = screenSize;
@@ -16,12 +16,6 @@ public class TV extends Product{
 		this.threeD = threeD;
 	}
 	
-	@Override
-	public String toString()
-	{
-		return "[ID: " + super.getProductID() + "] TV make and type: " + make + " " + type + "\nPrice: " + super.getPrice() + "\nScreen size: " + screenSize + "\n3D capable: " + ((threeD) ? "Yes" : "No") + "\n";
-	}
-	@Override
 	public void print() {
 		System.out.println(this);
 	}

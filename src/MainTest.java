@@ -12,18 +12,16 @@ public class MainTest {
 	"Quit"};
 
 	private static Scanner input = new Scanner(System.in);
-	
+
 	private static ProductDB products = new ProductDB();
 	private static List<Customer> customers = new ArrayList<Customer>();
-	
+
 	public static void main(String[] args) {
 
 		Phone p1 = new Phone("Samsung", "Galaxy S8", 500, 128);
 		Phone p2 = new Phone("Apple", "X", 1000, 256);
 		TV tv1 = new TV("LG", 50, "LED", false, 700);
 		TV tv2 = new TV("Samsung", 43, "LCD", true, 600);
-
-
 
 		products.add(p1);
 		products.add(p2);
@@ -32,6 +30,8 @@ public class MainTest {
 
 		Customer c1 = new Customer("John", "Some street 2");
 		Customer c2 = new Customer("Tom", "Some street 3");
+		customers.add(c1);
+		customers.add(c2);
 
 		Order o = new Order();
 		o.add(p1, 5);
@@ -45,9 +45,6 @@ public class MainTest {
 
 		c1.addOrder(o2);
 		c2.addOrder(o2);
-
-		//System.out.println(c1);
-		//System.out.println(c2);
 
 		interactWithMenu();
 	}
@@ -70,15 +67,15 @@ public class MainTest {
 				break;
 			case 2:
 				input.nextLine();
-				
+
 				System.out.print("Enter product ID: ");
 				Product product = products.find((input.hasNextInt()) ? input.nextInt() : -1);
 				System.out.println((product == null) ? "Couldn't find product with the specified ID." : "\n" + product);
-				
+
 				break;
 			case 3:
 				input.nextLine();
-				System.out.println(products.toString());
+				products.printAll();
 				break;
 			case 4:
 				input.nextLine();
@@ -96,28 +93,26 @@ public class MainTest {
 				System.out.println("Input must be between 1 and " + MENU_OPTIONS.length);
 			}
 		}
-
-
 	}
 
 	private static void displayOrders() {
 
 		String customerName = "";
-		
+
 		System.out.println("Type -1 to exit.");
-		
+
 		while(true)
 		{
 			System.out.print("Enter customer name: ");
 			customerName = input.nextLine();
-			
+
 			if(customerName.equals("-1"))
 				return;
-			
+
 			if(!customerName.isEmpty())
 			{
 				Customer customer = findCustomer(customerName);
-				
+
 				if(customer != null)
 				{
 					customer.printAllOrders();
@@ -134,7 +129,7 @@ public class MainTest {
 	private static void order() {
 
 		System.out.println("Type -1 to exit.");
-		
+
 		String customerName = "";
 		Customer currentCustomer = null;
 		Order order = new Order();
@@ -143,14 +138,14 @@ public class MainTest {
 		{
 			System.out.print("Enter customer name: ");
 			customerName = input.nextLine();
-			
+
 			if(customerName.equals("-1"))
 				return;
-			
+
 			else if(!customerName.isEmpty())
 			{
 				currentCustomer = findCustomer(customerName);
-				
+
 				if(currentCustomer == null)
 				{
 					System.out.println("\nCreating new customer with the name of: " + customerName + "\n");
@@ -160,9 +155,9 @@ public class MainTest {
 				break;
 			}
 		}
-		
+
 		System.out.println("Type -1 to finish adding orders.");
-		
+
 		while(true)
 		{
 			System.out.print("Enter product id and quantity: ");
@@ -186,11 +181,10 @@ public class MainTest {
 						System.out.println("\nCouldn't find product with the ID of: " + productID + "\n");
 				}
 				else if(in.length == 1 && in[0].equals("-1"))
-				{
 					break;
-				}
 				else
 					System.out.println("Invalid input. Try again.");
+				
 			} catch (NumberFormatException e)
 			{ System.out.println("Invalid input."); }
 		}
@@ -213,15 +207,11 @@ public class MainTest {
 
 		System.out.print("Enter phone make: ");
 		while((make = input.nextLine()).isEmpty())
-		{
 			System.out.print("Phone make cannot be empty!\nEnter phone make: ");
-		}
 
 		System.out.print("Enter phone model: ");
 		while((model = input.nextLine()).isEmpty())
-		{
 			System.out.print("Phone model cannot be empty!\nEnter phone model: ");
-		}
 
 		System.out.print("Enter phone price: ");
 		while(((input.hasNextInt()) ? price = input.nextInt() : 0) <= 0)
@@ -241,10 +231,10 @@ public class MainTest {
 
 		products.add(newPhone);
 
-		System.out.println("\nAdded '" + make + " " + model + "' to list of products. Product ID: " + Product.getCurrentID() + "\n");
+		System.out.println("\nAdded '" + make + " " + model + "' to list of products. Product ID: " + newPhone.getProductID() + "\n");
 
 	}
-	
+
 	private static Customer findCustomer(String name)
 	{
 		for(Customer customer : customers)

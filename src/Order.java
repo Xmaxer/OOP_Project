@@ -21,6 +21,11 @@ public class Order {
 		
 		return toReturn;
 	}
+	
+	public void print()
+	{
+		System.out.println(this);
+	}
 	public void add(Product product, int quantity)
 	{
 		ordersDetails.add(new OrderDetails(product, quantity));

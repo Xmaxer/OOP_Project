@@ -46,12 +46,6 @@ public class Product {
 	public int getProductID() {
 		return productID;
 	}
-	/**
-	 * @return the currentID
-	 */
-	public static int getCurrentID() {
-		return currentID;
-	}
 	
 	/**
 	 * @param name the name to set

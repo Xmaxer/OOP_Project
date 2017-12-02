@@ -1,9 +1,8 @@
 import java.util.ArrayList;
-import java.util.List;
 
 public class ProductDB{
 
-	private List<Product> products;
+	private ArrayList<Product> products;
 	
 	public ProductDB()
 	{
@@ -15,9 +14,16 @@ public class ProductDB{
 		products.add(product);
 	}
 	
-	public void remove(Product product)
+	public void remove(int id)
 	{
-		products.remove(product);
+		for(int i = 0, length = products.size(); i < length; i++)
+		{
+			if(products.get(i).getProductID() == id)
+			{
+				products.remove(i);
+				break;
+			}
+		}
 	}
 	
 	public String toString()
@@ -30,6 +36,11 @@ public class ProductDB{
 			toReturn += product.toString() + "\n";
 		
 		return toReturn;
+	}
+	
+	public void printAll()
+	{
+		System.out.println(this);
 	}
 	public Product find(int productID)
 	{
