@@ -12,7 +12,7 @@ public class OrderDetails {
 	
 	public String toString()
 	{
-		return quantity + " of " + product;
+		return quantity + " " + product.getName();
 	}
 	public void print()
 	{

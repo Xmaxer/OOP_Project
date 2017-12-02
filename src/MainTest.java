@@ -67,11 +67,7 @@ public class MainTest {
 				break;
 			case 2:
 				input.nextLine();
-
-				System.out.print("Enter product ID: ");
-				Product product = products.find((input.hasNextInt()) ? input.nextInt() : -1);
-				System.out.println((product == null) ? "Couldn't find product with the specified ID." : "\n" + product);
-
+				findProductByID();
 				break;
 			case 3:
 				input.nextLine();
@@ -93,6 +89,19 @@ public class MainTest {
 				System.out.println("Input must be between 1 and " + MENU_OPTIONS.length);
 			}
 		}
+	}
+
+	private static void findProductByID() {
+		
+		int id = 0;
+		System.out.print("Enter product ID: ");
+		while(((input.hasNextInt()) ? id = input.nextInt() : 0) <= 0)
+		{
+			System.out.print("Product ID must be a valid integer greater than 0.\nEnter product ID: ");
+			input.nextLine();
+		}
+		Product product = products.find(id);
+		System.out.println((product == null) ? "\nCouldn't find product with the ID: " + id + ".\n" : "\n" + product);
 	}
 
 	private static void displayOrders() {
