@@ -19,6 +19,11 @@ public class Phone extends Product{
 		return make;
 	}
 
+	@Override
+ 	public String toString()
+ 	{
+ 		return "[ID: " + super.getProductID() + "] Phone make and model: " + make + " " + model + "\nPrice: " + super.getPrice() + "\nStorage: " + storageSpace + "\n";
+ 	}
 	public void print()
 	{
 		super.print();

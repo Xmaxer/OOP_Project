@@ -47,52 +47,52 @@ public class MainTest {
 		c2.addOrder(o2);
 
 		interactWithMenu();
+		
+		input.close();
 	}
 
 	private static void interactWithMenu() {
 
 		while(true)
 		{
-			for(int i = 0; i < MENU_OPTIONS.length; i++)
-			{
+			for(int i = 0, length = MENU_OPTIONS.length; i < length; i++)
 				System.out.println((i+1) + ". " + MENU_OPTIONS[i]);
-			}
+			
 			System.out.print("Input a menu choice (1 - " + MENU_OPTIONS.length + "): ");
 
-			switch((input.hasNextInt()) ? input.nextInt() : 0)
+			int choice = 0;
+			if(input.hasNextInt())
+				choice = input.nextInt();
+			input.nextLine();
+
+			switch(choice)
 			{
 			case 1:
-				input.nextLine();
 				createAPhone();
 				break;
 			case 2:
-				input.nextLine();
 				findProductByID();
 				break;
 			case 3:
-				input.nextLine();
 				products.printAll();
 				break;
 			case 4:
-				input.nextLine();
 				order();
 				break;
 			case 5:
-				input.nextLine();
 				displayOrders();
 				break;
 			case 6:
 				System.out.println("Quitting...");
 				return;
 			default:
-				input.nextLine();
 				System.out.println("Input must be between 1 and " + MENU_OPTIONS.length);
 			}
 		}
 	}
 
 	private static void findProductByID() {
-		
+
 		int id = 0;
 		System.out.print("Enter product ID: ");
 		while(((input.hasNextInt()) ? id = input.nextInt() : 0) <= 0)
@@ -169,7 +169,7 @@ public class MainTest {
 
 		while(true)
 		{
-			System.out.print("Enter product id and quantity: ");
+			System.out.print("Enter product id and quantity (Separated by space): ");
 			String[] in = input.nextLine().split(" ");
 
 			try {
@@ -193,7 +193,7 @@ public class MainTest {
 					break;
 				else
 					System.out.println("Invalid input. Try again.");
-				
+
 			} catch (NumberFormatException e)
 			{ System.out.println("Invalid input."); }
 		}

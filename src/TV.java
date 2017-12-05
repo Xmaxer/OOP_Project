@@ -16,6 +16,11 @@ public class TV extends Product{
 		this.threeD = threeD;
 	}
 	
+	@Override
+	 public String toString()
+	 {
+	 	return "[ID: " + super.getProductID() + "] TV make and type: " + make + " " + type + "\nPrice: " + super.getPrice() + "\nScreen size: " + screenSize + "\n3D capable: " + ((threeD) ? "Yes" : "No") + "\n";
+	 }
 	public void print() {
 		System.out.println(this);
 	}

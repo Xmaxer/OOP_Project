@@ -26,10 +26,7 @@ public class Customer {
 	public void printAllOrders()
 	{
 		for(int i = 0, length = orders.size(); i < length; i++)
-		{
-			System.out.println(name + "'s order #" + (i + 1) + "\n");
-			orders.get(i).print();
-		}
+			System.out.println(name + "'s order #" + (i + 1) + "\n" + orders.get(i));
 	}
 	public String toString()
 	{
